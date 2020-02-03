@@ -1,0 +1,40 @@
+@font-face {
+    font-family: '0arameregular';
+    src: url('../fonts/548e77e130ea884c764acabe1ba1ad63.eot') format('eot'),
+         url('../fonts/548e77e130ea884c764acabe1ba1ad63.svg') format('svg'),
+         url('../fonts/548e77e130ea884c764acabe1ba1ad63.ttf') format('truetype'),
+         url('../fonts/548e77e130ea884c764acabe1ba1ad63.woff2') format('woff2'),
+         url('../fonts/548e77e130ea884c764acabe1ba1ad63.woff') format('woff');
+    font-weight: normal;
+    font-style: normal;
+}
+
+html, body, #root {
+    margin: 0;
+    height: 100%;
+    width: 100%;
+    font-family: '0arameregular';
+}
+
+.mobile-scale {
+    @media (max-width: 320px){
+        -moz-transform: scale(0.3);
+        zoom:30%;
+    }
+    @media (min-width: 321px){
+        -moz-transform: scale(0.4);
+        zoom:40%;
+    }
+    @media (min-width: 456px){
+        -moz-transform: scale(0.6);
+        zoom:60%;
+    }
+    @media (min-width: 668px){
+        -moz-transform: scale(0.8);
+        zoom:80%;
+    }
+    @media (min-width: 769px){
+        -moz-transform: scale(1);
+        zoom:100%;
+    }
+}
