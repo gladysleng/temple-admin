@@ -1,0 +1,35 @@
+.column-container {
+  display: flex;
+  flex-direction: column;
+}
+.row-container {
+  display: flex;
+  flex-direction: row;
+}
+.left {
+  @media (max-width: 320px){
+    flex: 0 0 46%;
+  }
+  @media (min-width: 321px){
+    flex: 0 0 46%;
+  }
+  @media (min-width: 1055px){
+    flex: 0 0 47%;
+  }
+  @media (min-width: 1255px){
+    flex: 0 0 48%;
+  }
+  margin: 0 0 20px 20px;
+  text-align: end;
+}
+.right {
+  flex: 1;
+  margin: 0 0 20px 20px;
+  text-align: start;
+}
+.header {
+  font-size: x-large;
+  font-weight: bold;
+  margin: 30px 30px;
+  text-align: center;
+}
