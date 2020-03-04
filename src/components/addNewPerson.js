@@ -28,7 +28,7 @@ export default class Application extends React.Component {
                         <input value={this.state.email} onChange={this.handleChange} type="email" name="email"
                                className="form-control" id="exampleInputEmail" aria-describedby="emailHelp"
                                placeholder="Enter email"/>
-                        <small id="emailHelp" className="form-text text-muted">請輸入您的帳號</small>
+                        <small id="emailHelp" className="form-text text-muted">請輸入您的帳戶</small>
                     </div>
                     <div className="form-group">
                         <label htmlFor="exampleInputPassword1">Password</label>

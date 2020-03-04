@@ -41,7 +41,7 @@ export default class Login extends React.Component {
         return (
             <div class="container-fluid h-100 bg-light text-dark">
                 <div className="row justify-content-center align-items-center">
-                    <h1 className="header">登入帳號</h1>
+                    <h1 className="header">登入帳戶</h1>
                 </div>
                 <hr/>
                 <div className="d-flex justify-content-center align-items-center container ">
@@ -51,7 +51,7 @@ export default class Login extends React.Component {
                                 <label for="exampleInputEmail" > 郵件  Email</label>
                                 <input value={this.state.email} onChange={this.handleChange} type="email" name="email"
                                        class="form-control" id="exampleInputEmail" aria-describedby="emailHelp"
-                                       placeholder="請輸入帳號"/>
+                                       placeholder="請輸入郵件"/>
                             </div>
                             <div class="form-group">
                                 <label for="exampleInputPassword1" > 密碼 Password </label>
