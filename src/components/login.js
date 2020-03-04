@@ -10,7 +10,8 @@ export default class Login extends React.Component {
         this.signUp = this.signUp.bind(this);
         this.state = {
             email: '',
-            password: ''
+            password: '',
+            errorMessage:''
         }
     }
 
@@ -19,6 +20,7 @@ export default class Login extends React.Component {
         e.preventDefault();
         fire.auth().signInWithEmailAndPassword(this.state.email, this.state.password).then((u) => {
         }).catch((error) => {
+            this.setState({errorMessage:error.message});
             console.log(error);
         });
     }
@@ -59,6 +61,9 @@ export default class Login extends React.Component {
                                        name="password" class="form-control" id="exampleInputPassword1"
                                        placeholder="請輸入密碼"/>
                                 <small className="warning"> 密碼最少六位數</small>
+                            </div>
+                            <div>
+                                {this.state.errorMessage && <h3 className="error"> { this.state.errorMessage } </h3>}
                             </div>
                             <button type="submit" style={{marginLeft: '90px'}} onClick={this.login} class="btn btn-primary"> 登入 Login</button>
                             <button onClick={this.signUp} style={{marginLeft: '40px'}} className="btn btn-success">註冊 Sign Up
