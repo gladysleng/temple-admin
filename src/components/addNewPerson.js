@@ -95,7 +95,7 @@ export default class AddNewPerson extends React.Component {
                             <Form.Row>
                                 <Form.Group as={Col} controlId="formGridCity">
                                     <Form.Label>城市</Form.Label>
-                                    <Form.Control/>
+                                    <Form.Control placeholder="Toronto"/>
                                 </Form.Group>
 
                                 <Form.Group as={Col} controlId="formGridState">
@@ -119,7 +119,7 @@ export default class AddNewPerson extends React.Component {
 
                                 <Form.Group as={Col} controlId="formGridZip">
                                     <Form.Label>地區郵政</Form.Label>
-                                    <Form.Control/>
+                                    <Form.Control placeholder="K2R 5B6"/>
                                 </Form.Group>
                             </Form.Row>
 
