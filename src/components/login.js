@@ -66,7 +66,7 @@ export default class Login extends React.Component {
                                 {this.state.errorMessage && <h3 className="error"> { this.state.errorMessage } </h3>}
                             </div>
                             <button type="submit" style={{marginLeft: '90px'}} onClick={this.login} class="btn btn-primary"> 登入 Login</button>
-                            <button onClick={this.signUp} style={{marginLeft: '40px'}} className="btn btn-success">註冊 Sign Up
+                            <button onClick={this.signUp} style={{marginLeft: '40px'}} className="btn btn-primary">註冊 Sign Up
                             </button>
                         </form>
                     </div>

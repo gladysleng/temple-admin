@@ -8,7 +8,7 @@ export default class Profile extends React.Component {
         <span className="header"> 個人資料 </span>
         <div className="row-container">
           <span className="left"> 名字: </span>
-          <span className="right"> 寧小平 </span>
+          <span className="right"> 寧ab </span>
         </div>
         <div className="row-container">
           <span className="left"> 求道年齡: </span>

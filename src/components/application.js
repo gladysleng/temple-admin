@@ -4,6 +4,7 @@ import Profile from './profile.js';
 import fire from "../fire";
 import Login from "./login";
 import Home from "./home";
+import AddNewPerson from "./addNewPerson";
 
 export default class Application extends React.Component {
 
@@ -32,7 +33,7 @@ export default class Application extends React.Component {
     render() {
         return (
             <div className="Temple-admin">
-                {this.state.user ? (<Home/>) : (<Login/>)}
+                {this.state.user ? (<AddNewPerson/>) : (<Login/>)}
             </div>
         );
     }
