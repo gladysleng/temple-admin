@@ -5,6 +5,11 @@ import fire from "../fire";
 import Login from "./login";
 import Home from "./home";
 import AddNewPerson from "./addNewPerson";
+import PeopleTable from './peopleTable';
+import {
+  Switch,
+  Route
+} from "react-router-dom";
 
 export default class Application extends React.Component {
 
@@ -32,9 +37,13 @@ export default class Application extends React.Component {
 
     render() {
         return (
-            <div className="Temple-admin">
-                {this.state.user ? (<AddNewPerson/>) : (<Login/>)}
-            </div>
+          <div className="Temple-admin">
+            <Switch>
+              <Route exact path="/" component={Login} />
+              <Route exact path="/home" component={Home} />
+              <Route exact path="/people-table" component={PeopleTable} />
+            </Switch>
+          </div>
         );
     }
 }
