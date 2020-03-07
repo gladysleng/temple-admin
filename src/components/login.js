@@ -1,5 +1,6 @@
 import React from 'react';
 import fire from "../fire";
+import { NavLink } from 'react-router-dom';
 import './login.scss';
 
 export default class Login extends React.Component {
@@ -18,7 +19,8 @@ export default class Login extends React.Component {
     login(e) {
         //this prevent default will prevent reloading page if login event is clicked because it is a form
         e.preventDefault();
-        fire.auth().signInWithEmailAndPassword(this.state.email, this.state.password).then((u) => {
+      fire.auth().signInWithEmailAndPassword(this.state.email, this.state.password).then((u) => {
+        this.props.history.push("/home");
         }).catch((error) => {
             this.setState({errorMessage:error.message});
             console.log(error);
