@@ -2,3 +2,14 @@ table tr td {
   border: 1px solid black;
   padding: 7px;
 }
+tr:nth-child(even) {
+  background-color: #E9EBEA;
+}
+.container {
+  margin: 20px;
+}
+.tbl-header {
+  font-weight: bold;
+  color: #000;
+  background-color: #BFC5C2;
+}
