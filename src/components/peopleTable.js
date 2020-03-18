@@ -3,6 +3,7 @@ import React from 'react';
 import fire from "../fire";
 import _ from 'lodash';
 import { NavLink } from 'react-router-dom';
+import home from '../image/home.svg';
 
 export default class PeopleTable extends React.Component {
   constructor(props) {
@@ -38,6 +39,11 @@ export default class PeopleTable extends React.Component {
       this.setState({ loading: false, data: data });
     })
   }
+
+  backToHomePage = () => {
+    fire.auth().signOut();
+  }
+
   render() {
     const {
       loading,
@@ -45,16 +51,17 @@ export default class PeopleTable extends React.Component {
       query
     } = this.state;
 
-    const headers = ["Name", "Gender", "Get Tao Age", "Get Tao Place", "YinShi", "BaoShi", "Address",
-      "Attended 3Days FaHui", "3Days FaHui Date", "DianChuanShi", "Donation",]
+    const headers = ["姓名", "性別", "求道日期", "佛堂", "引師", "保師", "地址",
+      "三天法會", "三天法會日期", "點傳師", "了願",]
     const filtered_data = !loading && _.chain(data)
       .pickBy((row) => _.includes(row.name, query))
       .value();
     
     return !loading &&
       <div className="container">
-        <label style={{ fontWeight: "bold" }}> Search by Name: </label>
+        <label style={{ fontWeight: "bold" }}> Search by Name : </label>
         <input
+          className="input-box"
           type="text"
           placeholder="Search by Name"
           onChange={ (evt) => this.setState({ query: evt.target.value }) }
@@ -81,6 +88,11 @@ export default class PeopleTable extends React.Component {
             )}
         </tbody>
         </table>
+        <NavLink className="home-page-link" exact to={'home'}>
+          <img className="image" src={home} alt="home" />
+          Back to home page
+        </NavLink>
       </div>;
+
   }
 }

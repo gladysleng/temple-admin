@@ -1,9 +1,19 @@
+table{
+  margin-top: 10px;
+  margin-bottom: 10px;
+}
 table tr td {
   border: 1px solid black;
   padding: 7px;
+  max-width:100%;
+  white-space:nowrap;
+  text-align: center;
 }
 tr:nth-child(even) {
-  background-color: #E9EBEA;
+  background-color: #EBEBE9;
+  text-align: center;
+  max-width:100%;
+  white-space:nowrap;
 }
 .container {
   margin: 20px;
@@ -11,5 +21,21 @@ tr:nth-child(even) {
 .tbl-header {
   font-weight: bold;
   color: #000;
-  background-color: #BFC5C2;
+  background-color: #1B263B;
+  text-align: center;
+  color:#EDF2F4;
+
+}
+.home-page-link{
+  padding-top: 20px;
+  padding-left:10px;
+}
+.input-box{
+  margin-left: 9px;
+}
+.image{
+  padding-right: 5px;
+  width: 25px;
+  height:35px;
+  padding-bottom: 10px;
 }
