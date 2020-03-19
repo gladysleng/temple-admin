@@ -1,0 +1,109 @@
+.TrinityItem {
+  height: 100%;
+  background-color: darken( #748CAB, 10% );
+  border-radius: 10px;
+  display: flex;
+  margin: 10px;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-between;
+
+  &:hover, &:focus {
+    background-color: #8DA0BA;
+  }
+
+  &, &:link, &:visited, &:hover, &:focus {
+    color: inherit;
+    text-decoration: inherit;
+  }
+
+
+    @media(min-width: 576px) {
+      flex-basis: 30%;
+      max-width: 30%;
+    }
+
+  @media(max-width: 576px) {
+    flex-flow: row-reverse;
+    justify-content: space-around;
+    &:first-child {
+      margin-top: 10px;
+    }
+    margin-bottom: 10px;
+  }
+}
+
+.TrinityItem__Title {
+  font-size: 1.75em;
+  padding-top: 8px;
+  margin-top: auto;
+  margin-bottom: auto;
+  text-align: center;
+  text-transform: uppercase;
+  color: #fff;
+
+  @media(min-width: 576px) {
+    width: 100%; /* IE fix */
+  }
+}
+
+.TrinityItem__Img {
+  width: 40%;
+  height: 100%;
+  margin-bottom: 10px;
+
+  @media(max-width: 576px) {
+    width: 5em;
+    height: 5em;
+    margin: 10px;
+  }
+
+  & > img {
+    width: 100%;
+    margin-left: auto;
+    margin-right: auto;
+  }
+}
+
+/* Remove extra left and right margins, due to padding in columns */
+.row {
+  //margin: 40px -50px;
+  display: flex;
+  justify-content: center;
+  flex-direction: row;
+}
+
+/* Clear floats after the columns */
+.row:after {
+  content: "";
+  display: table;
+  clear: both;
+}
+
+/* Float four columns side by side */
+.column {
+  width: 100%;
+  margin-top: 10px;
+  display: flex;
+  justify-content: center;
+  @media(min-width: 576px) {
+    flex-direction: row;
+  }
+  @media(max-width: 576px) {
+    flex-direction: column;
+  }
+
+  }
+
+.header{
+  font-family: Roboto;
+  padding: 40px 40px 40px;
+  font-size: 100px;
+  background-color:  darken( #748CAB, 10% );
+  text-align: center;
+  margin: 0px;
+  color: #fff;
+  border-bottom: 10px solid #da3a38;
+  margin-top: 0px;
+
+}

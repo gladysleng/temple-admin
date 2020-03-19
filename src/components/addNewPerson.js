@@ -5,6 +5,8 @@ import Form from 'react-bootstrap/Form';
 import Col from 'react-bootstrap/Col'
 import Row from 'react-bootstrap/Row'
 import fire from "../fire";
+import home from "../image/home.svg";
+import {NavLink} from "react-router-dom";
 
 export default class AddNewPerson extends React.Component {
     constructor(props) {
@@ -211,6 +213,10 @@ export default class AddNewPerson extends React.Component {
                                 </Button>
                             </div>
                             <button onClick={this.logout}> Logout</button>
+                            <NavLink className="home-page-link" exact to={'home'}>
+                                <img className="image" src={home} alt="home" />
+                                Back to home page
+                            </NavLink>
                         </Form>
                     </div>
                 </div>

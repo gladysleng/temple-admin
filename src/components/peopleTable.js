@@ -58,14 +58,21 @@ export default class PeopleTable extends React.Component {
       .value();
     
     return !loading &&
-      <div className="container">
-        <label style={{ fontWeight: "bold" }}> Search by Name : </label>
-        <input
-          className="input-box"
-          type="text"
-          placeholder="Search by Name"
-          onChange={ (evt) => this.setState({ query: evt.target.value }) }
-        />
+      <div className="people-table-container">
+        <h1 className="header"> 道親資料 </h1>
+        <div>
+          <label style={{ fontWeight: "bold" ,paddingTop:'30px'}}> Search by Name : </label>
+          <input
+            className="input-box"
+            type="text"
+            placeholder="Search by Name"
+            onChange={ (evt) => this.setState({ query: evt.target.value }) }
+          />
+          <NavLink className="home-page-link" exact to={'home'}>
+            <img className="image" src={home} alt="home" />
+            Back to home page
+          </NavLink>
+        </div>
         <table>
         <tbody>
           <tr>
@@ -88,10 +95,6 @@ export default class PeopleTable extends React.Component {
             )}
         </tbody>
         </table>
-        <NavLink className="home-page-link" exact to={'home'}>
-          <img className="image" src={home} alt="home" />
-          Back to home page
-        </NavLink>
       </div>;
 
   }

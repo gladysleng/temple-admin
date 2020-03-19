@@ -1,11 +1,16 @@
 import React from 'react';
 import fire from "../fire";
-import { NavLink } from 'react-router-dom';
+import './home.scss';
+import {NavLink} from 'react-router-dom';
+import searchUser from '../image/searchUser.svg';
+import addUser from '../image/addUser.svg';
+import logout from '../image/logout.svg';
+import printing from '../image/printing.svg';
 
 export default class Home extends React.Component {
   constructor(props) {
     super(props);
-    
+
     this.state = {
       text: ""
     }
@@ -15,32 +20,49 @@ export default class Home extends React.Component {
     fire.auth().signOut();
   }
 
-  handlerSubmit = (e) => {
-    let messageRef = fire.database().ref('messages').orderByKey().limitToLast(100);
-    console.log(messageRef);
-    fire.database().ref('messages').push(this.state.text);
-    this.setState({
-      text: ""
-    })
-  }
-
   render() {
+    const TrinityItem = ({img_url, title, href}) => (
+      <a href={href} className="TrinityItem">
+        <div className="TrinityItem__Title">
+          {title}
+        </div>
+        <div className="TrinityItem__Img">
+          <img aria-hidden="true" src={img_url}/>
+        </div>
+      </a>
+    );
+
     return (
-      <div className="h-100 d-flex flex-column justify-content-center align-items-center mobile-scale">
-        <div style={{ display: "inline-block" }}>
-          <h1> Home Page </h1>
-          <input
-            type="text"
-            onChange={
-              (e) => this.setState({ text: e.target.value })
-            }
-            id="inputText"
-          />
-          <button onClick={this.handlerSubmit}> Save</button>
-          <button onClick={this.logout}> Logout </button>
-      </div>
-        <NavLink exact to={'add-new-person'}> Add New Person </NavLink>
-        <NavLink exact to={'people-table'}> Main Table </NavLink>
+      <div>
+        <h1 className="header"> Home Page 主頁 </h1>
+        <div style={{display: "inline-block"}}>
+          <div class="row">
+            <div class="column">
+              <TrinityItem
+                img_url={searchUser}
+                title={"Search User 搜索"}
+                href={"/people-table"}
+              />
+              <TrinityItem
+                img_url={addUser}
+                title={"Add User 加道親"}
+                href={"/add-new-person"}
+              />
+            </div>
+            <div className="column">
+              <TrinityItem
+                img_url={printing}
+                title={"Print Form 打印"}
+              />
+              <TrinityItem
+                img_url={logout}
+                title={"Log Out 登出"}
+                onClick={this.logout}
+                href={"/"}
+              />
+            </div>
+          </div>
+        </div>
       </div>
     );
   }
