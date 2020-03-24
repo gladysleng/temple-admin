@@ -1,7 +1,7 @@
 import React from 'react';
 import fire from "../fire";
-import _ from 'lodash';
 import './profile.scss';
+import {NavLink} from "react-router-dom";
 
 export default class Profile extends React.Component {
   constructor(props) {
@@ -23,6 +23,9 @@ export default class Profile extends React.Component {
     return (
       <div className="column-container">
         <span className="header"> 個人資料 </span>
+        <NavLink style={{marginLeft: 30}} exact to={'/people-table'}>
+          Back to user search
+        </NavLink>
         <div className="row-container">
           <span className="left"> 名字: </span>
           <span className="right"> {data.name} </span>

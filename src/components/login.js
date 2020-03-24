@@ -44,10 +44,7 @@ export default class Login extends React.Component {
     render() {
         return (
             <div class="container-fluid h-100 bg-light text-dark">
-                <div className="row justify-content-center align-items-center">
                     <h1 className="header">登入帳戶</h1>
-                </div>
-                <hr/>
                 <div className="d-flex justify-content-center align-items-center container ">
                     <div className="col-md-8">
                         <form>

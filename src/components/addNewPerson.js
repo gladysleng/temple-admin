@@ -7,31 +7,32 @@ import Row from 'react-bootstrap/Row'
 import fire from "../fire";
 import home from "../image/home.svg";
 import {NavLink} from "react-router-dom";
+import _ from 'lodash';
 
 export default class AddNewPerson extends React.Component {
     constructor(props) {
         super(props);
         this.handleAttendThreeDaysFaHui = this.handleAttendThreeDaysFaHui.bind(this);
         this.handleChange = this.handleChange.bind(this);
-    }
 
-    state = {
-        name: '',
-        gender: '乾',
-        getTaoAge: '',
-        getTaoPlace: '',
-        yinShi: '',
-        baoShi: '',
-        streetAddress: '',
-        unit: '',
-        cityAddress: '',
-        province: 'ON',
-        postalCode: '',
-        attendedThreeDaysFaHui: false,
-        threeDaysFaHuiDate: '',
-        dianChuanShi: '',
-        donation: '',
-
+        this.state = {
+            dataIsEmpty: false,
+            name: '',
+            gender: '乾',
+            getTaoAge: '',
+            getTaoPlace: '',
+            yinShi: '',
+            baoShi: '',
+            streetAddress: '',
+            unit: '',
+            cityAddress: '',
+            province: 'ON',
+            postalCode: '',
+            attendedThreeDaysFaHui: false,
+            threeDaysFaHuiDate: '',
+            dianChuanShi: '',
+            donation: '',
+        }
     }
 
     componentDidMount() {
@@ -50,42 +51,53 @@ export default class AddNewPerson extends React.Component {
     }
 
     handlerSubmit = e => {
-        let mf = fire.database().ref('Users');
-        let messageRef = mf.push({
-            name: this.state.name,
-            gender: this.state.gender,
-            getTaoAge: this.state.getTaoAge,
-            getTaoPlace: this.state.getTaoPlace,
-            yinShi: this.state.yinShi,
-            baoShi: this.state.baoShi,
-            streetAddress: this.state.streetAddress,
-            unit: this.state.unit,
-            cityAddress: this.state.cityAddress,
-            province: this.state.province,
-            postalCode: this.state.postalCode,
-            attendedThreeDaysFaHui: this.state.attendedThreeDaysFaHui,
-            threeDaysFaHuiDate: this.state.threeDaysFaHuiDate,
-            dianChuanShi: this.state.dianChuanShi,
-            donation: this.state.donation,
-        });
-        console.log("posted:" + messageRef);
-        this.setState({
-            name: '',
-            gender: '乾',
-            getTaoAge: '',
-            getTaoPlace: '',
-            yinShi: '',
-            baoShi: '',
-            streetAddress: '',
-            unit: '',
-            cityAddress: '',
-            province: '',
-            postalCode: '',
-            attendedThreeDaysFaHui: false,
-            threeDaysFaHuiDate: '',
-            dianChuanShi: '',
-            donation: '',
-        })
+        e.preventDefault();
+        const dataIsEmpty = (this.state.name === '' || this.state.getTaoAge === '' || this.state.getTaoPlace === '' || this.state.yinShi === '' ||
+        this.state.baoShi === '' || this.state.streetAddress === '' || this.state.unit === '' || this.state.cityAddress === '' ||
+        this.state.postalCode === '' || this.state.threeDaysFaHuiDate === '' || this.state.dianChuanShi === '' || this.state.donation === ''
+        )
+        if(dataIsEmpty){
+            this.setState({dataIsEmpty: dataIsEmpty})
+        } else{
+            console.log("Submit")
+            let mf = fire.database().ref('Users');
+            let messageRef = mf.push({
+                name: this.state.name,
+                gender: this.state.gender,
+                getTaoAge: this.state.getTaoAge,
+                getTaoPlace: this.state.getTaoPlace,
+                yinShi: this.state.yinShi,
+                baoShi: this.state.baoShi,
+                streetAddress: this.state.streetAddress,
+                unit: this.state.unit,
+                cityAddress: this.state.cityAddress,
+                province: this.state.province,
+                postalCode: this.state.postalCode,
+                attendedThreeDaysFaHui: this.state.attendedThreeDaysFaHui,
+                threeDaysFaHuiDate: this.state.threeDaysFaHuiDate,
+                dianChuanShi: this.state.dianChuanShi,
+                donation: this.state.donation,
+            });
+            console.log("posted:" + messageRef);
+            this.setState({
+                name: '',
+                gender: '乾',
+                getTaoAge: '',
+                getTaoPlace: '',
+                yinShi: '',
+                baoShi: '',
+                streetAddress: '',
+                unit: '',
+                cityAddress: '',
+                province: '',
+                postalCode: '',
+                attendedThreeDaysFaHui: false,
+                threeDaysFaHuiDate: '',
+                dianChuanShi: '',
+                donation: '',
+                emptyData: true,
+            })
+        }
     }
 
     logout() {
@@ -206,6 +218,9 @@ export default class AddNewPerson extends React.Component {
                                 <Form.Control name="threeDaysFaHuiDate" type="text" placeholder="請輸入參加三天法會的日期如 ： 30-6-2023"
                                               onChange={this.handleChange}/>
                             </Form.Group>
+                            }
+                            { this.state.dataIsEmpty &&
+                              <span  style={{ fontWeight: "bold" ,color:'red'}}> **请输入所有资料** </span>
                             }
                             <div className="text-center">
                                 <Button variant="primary" type="submit" onClick={this.handlerSubmit}>
