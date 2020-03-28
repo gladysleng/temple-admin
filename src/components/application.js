@@ -5,6 +5,7 @@ import fire from "../fire";
 import Login from "./login";
 import Home from "./home";
 import AddNewPerson from "./addNewPerson";
+import SelectAttendees from "./selectAttendees";
 import PeopleTable from './peopleTable';
 import {
   Switch,
@@ -44,6 +45,7 @@ export default class Application extends React.Component {
               <Route exact path="/people-table" component={PeopleTable} />
               <Route exact path="/add-new-person" component={AddNewPerson} />
               <Route exact path="/profile/:id" render={ (props) => <Profile {...props} /> } />
+              <Route exact path="/select-attendees" component={SelectAttendees} />
             </Switch>
           </div>
         );
