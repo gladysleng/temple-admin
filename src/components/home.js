@@ -53,6 +53,7 @@ export default class Home extends React.Component {
               <TrinityItem
                 img_url={printing}
                 title={"Print Form 打印"}
+                href={"/print-form"}
               />
               <TrinityItem
                 img_url={logout}

@@ -6,6 +6,7 @@ import Login from "./login";
 import Home from "./home";
 import AddNewPerson from "./addNewPerson";
 import PeopleTable from './peopleTable';
+import PrintForm from "./printForm";
 import {
   Switch,
   Route
@@ -44,6 +45,7 @@ export default class Application extends React.Component {
               <Route exact path="/people-table" component={PeopleTable} />
               <Route exact path="/add-new-person" component={AddNewPerson} />
               <Route exact path="/profile/:id" render={ (props) => <Profile {...props} /> } />
+              <Route exact path="/print-form" component={PrintForm} />
             </Switch>
           </div>
         );
