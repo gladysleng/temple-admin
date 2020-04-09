@@ -20,7 +20,7 @@ class InteractiveTable extends React.Component {
     } = this.props;
     
     const filtered_rows = gender ? _.pickBy(rows, (row) => row.gender===gender) : rows;
-    return <div>
+    return <div id={`${gender}_div`}>
       { gender && <span> {`List of ${gender} attendees ONLY`} </span> }
       <table>
       <thead>
@@ -29,20 +29,34 @@ class InteractiveTable extends React.Component {
           <td style={{fontWeight: 700}}>
             { gender ? `Name (${gender})` : `Name` }
           </td>
+          { include_row_ctr && 
+          <td style={{fontWeight: 700}}>
+            Donation ($)
+          </td> }
+          <td></td>
         </tr>
       </thead>
       <tbody>
         { _.map(filtered_rows, (row, id) => 
         <tr
-          onClick={() => row_handler({[id]: row})}
-          className={"table-hover"}
           key={id} >
           { include_row_ctr && <td> {_.findIndex(_.keys(filtered_rows), row_id => row_id===id)} </td> }
-          <td key={id}>
+          <td key={`name_${id}`}>
             <div style={{display: "flex", justifyContent: "flex-end"}}>
               <span style={{marginLeft: "auto"}}> {row.name} </span>
-              <img style={{width: 20, height: 20, marginLeft: "auto"}} alt={isPlus ? "plus" : "minus"} aria-hidden="true" src={isPlus ? plus : minus}/>
             </div>
+          </td>
+          { !isPlus && 
+          <td key={`donation_${id}`}>
+            <input id={id} type={"text"}/>
+          </td> }
+          <td
+            title={isPlus ? "Click to add to attendees" : "Click to remove the attendee"}
+            onClick={() => row_handler({[id]: row})}
+            className={"table-hover"}
+            key={`delete_row_${id}`}
+          >
+            <img style={{width: 20, height: 20, marginLeft: "auto"}} alt={isPlus ? "plus" : "minus"} aria-hidden="true" src={isPlus ? plus : minus}/>
           </td>
         </tr>
         )}
@@ -94,7 +108,7 @@ export default class SelectAttendees extends React.Component {
       .fromPairs()
       .value();
 
-    return <div>
+    return <div style={{margin: 10}}>
         <h1 className="header"> Add attendees </h1>
         <div style={{display: "flex", flexDirection: "column"}}>
           <label style={{ fontWeight: "bold" ,paddingTop:'30px'}}> Event Name : </label>
@@ -139,12 +153,44 @@ export default class SelectAttendees extends React.Component {
       </div>
       <div>
         <button onClick={() => {
+          var success = true;
+          if(event_name.length===0) {
+            success = false;
+          }
+          var 乾_data = _.chain(selected_data)
+            .pickBy(row => row.gender==="乾")
+            .value();
+          _.forEach(document.getElementById("乾_div").getElementsByTagName("INPUT"), input => {
+            if(input.value.length===0 || isNaN(input.value)) {
+              success = false;
+            }
+            乾_data[input.id] = {
+              ...乾_data[input.id],
+              donation: _.toNumber(input.value),
+            };
+          });
+          var 坤_data = _.chain(selected_data)
+            .pickBy(row => row.gender==="坤")
+            .value();
+          _.forEach(document.getElementById("坤_div").getElementsByTagName("INPUT"), input => {
+            if(input.value.length===0 || isNaN(input.value)) {
+              success = false;
+            }
+            坤_data[input.id] = {
+              ...坤_data[input.id],
+              donation: _.toNumber(input.value),
+            };
+          });
+          if(!success) {
+            alert("You need an event name and valid input for all donations");
+            return;
+          }
           let mf = fire.database().ref('Events');
           mf.push({
               event_name: event_name,
               attendees: {
-                乾: _.pickBy(selected_data, (row) => row.gender==="乾"),
-                坤: _.pickBy(selected_data, (row) => row.gender==="坤")
+                乾: 乾_data,
+                坤: 坤_data
               }
           });
         }}>

@@ -13,7 +13,7 @@ export default class Home extends React.Component {
 
     this.state = {
       text: ""
-    }
+    };
   }
 
   logout = () => {
@@ -62,6 +62,7 @@ export default class Home extends React.Component {
                 href={"/"}
               />
             </div>
+            <a href={"/view-all-events"}> View Event </a>
           </div>
         </div>
       </div>

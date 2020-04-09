@@ -15,7 +15,7 @@ tr:nth-child(even) {
   max-width:100%;
   white-space:nowrap;
 }
-tr.table-hover:hover td {
+td.table-hover:hover {
   background-color: rgb(150, 185, 252);
   cursor: pointer;
 }

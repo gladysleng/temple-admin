@@ -12,7 +12,7 @@ export default class PeopleTable extends React.Component {
       loading: false,
       query: "",
       data: [],
-    }
+    };
   }
   componentDidMount() {
     this.setState({ loading: true });
@@ -37,7 +37,7 @@ export default class PeopleTable extends React.Component {
         .fromPairs()
         .value();
       this.setState({ loading: false, data: data });
-    })
+    });
   }
 
   backToHomePage = () => {
@@ -52,7 +52,7 @@ export default class PeopleTable extends React.Component {
     } = this.state;
 
     const headers = ["姓名", "性別", "求道日期", "佛堂", "引師", "保師", "地址",
-      "三天法會", "三天法會日期", "點傳師", "了願",]
+      "三天法會", "三天法會日期", "點傳師", "了願",];
     const filtered_data = !loading && _.chain(data)
       .pickBy((row) => _.includes(row.name, query))
       .value();

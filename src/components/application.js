@@ -7,6 +7,8 @@ import Home from "./home";
 import AddNewPerson from "./addNewPerson";
 import SelectAttendees from "./selectAttendees";
 import PeopleTable from './peopleTable';
+import ViewAllEvents from './viewAllEvents';
+import {ViewEvent} from './viewEvent';
 import {
   Switch,
   Route
@@ -18,7 +20,7 @@ export default class Application extends React.Component {
         super(props);
         this.state = {
             user: {},
-        }
+        };
     }
 
     componentDidMount() {
@@ -46,6 +48,8 @@ export default class Application extends React.Component {
               <Route exact path="/add-new-person" component={AddNewPerson} />
               <Route exact path="/profile/:id" render={ (props) => <Profile {...props} /> } />
               <Route exact path="/select-attendees" component={SelectAttendees} />
+              <Route exact path="/view-all-events" component={ViewAllEvents} />
+              <Route exact path="/view-event/:event_id" children={<ViewEvent />} />
             </Switch>
           </div>
         );
