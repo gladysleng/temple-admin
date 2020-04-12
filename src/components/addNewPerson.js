@@ -3,7 +3,6 @@ import './addNewPerson.scss';
 import Button from 'react-bootstrap/Button';
 import Form from 'react-bootstrap/Form';
 import Col from 'react-bootstrap/Col'
-import Row from 'react-bootstrap/Row'
 import fire from "../fire";
 import home from "../image/home.svg";
 import {NavLink} from "react-router-dom";
@@ -32,13 +31,12 @@ export default class AddNewPerson extends React.Component {
             threeDaysFaHuiDate: '',
             dianChuanShi: '',
             donation: '',
+            dataPosted:false,
         }
     }
 
     componentDidMount() {
         const rootRef = fire.database().ref().child('User');
-
-
     }
 
     handleAttendThreeDaysFaHui(e) {
@@ -54,7 +52,7 @@ export default class AddNewPerson extends React.Component {
         e.preventDefault();
         const dataIsEmpty = (this.state.name === '' || this.state.getTaoAge === '' || this.state.getTaoPlace === '' || this.state.yinShi === '' ||
         this.state.baoShi === '' || this.state.streetAddress === '' || this.state.unit === '' || this.state.cityAddress === '' ||
-        this.state.postalCode === '' || this.state.threeDaysFaHuiDate === '' || this.state.dianChuanShi === '' || this.state.donation === ''
+        this.state.postalCode === '' || this.state.dianChuanShi === '' || this.state.donation === ''
         )
         if(dataIsEmpty){
             this.setState({dataIsEmpty: dataIsEmpty})
@@ -78,6 +76,9 @@ export default class AddNewPerson extends React.Component {
                 dianChuanShi: this.state.dianChuanShi,
                 donation: this.state.donation,
             });
+            if(messageRef != null){
+                this.setState({dataPosted:true});
+            }
             console.log("posted:" + messageRef);
             this.setState({
                 name: '',
@@ -109,7 +110,7 @@ export default class AddNewPerson extends React.Component {
         return (
             <div className="container-fluid h-100 bg-light text-dark">
                 <div className="row justify-content-center align-items-center">
-                    <h1 className="header">登記新求道人</h1>
+                    <h1 className="header">登記新求道人 <br/> Register New Participant</h1>
                 </div>
                 <hr/>
                 <div className="d-flex justify-content-center align-items-center container ">
@@ -118,7 +119,7 @@ export default class AddNewPerson extends React.Component {
                             <Form.Row>
                                 <Form.Group as={Col} controlId="formGridEmail">
                                     <Form.Label>姓名</Form.Label>
-                                    <Form.Control name="name" type="text" placeholder="請輸入姓名"
+                                    <Form.Control name="name" type="text" placeholder="請輸入姓名" value={this.state.name}
                                                   onChange={this.handleChange}/>
                                 </Form.Group>
                                 <Form.Group controlId="Form.ControlSelectGender">
@@ -133,60 +134,59 @@ export default class AddNewPerson extends React.Component {
                             <Form.Row>
                                 <Form.Group as={Col} controlId="formYear">
                                     <Form.Label>求道年份</Form.Label>
-                                    <Form.Control name="getTaoAge" type="number" placeholder="請輸入求道年份"
+                                    <Form.Control name="getTaoAge" type="number" placeholder="請輸入求道年份" value={this.state.getTaoAge}
                                                   onChange={this.handleChange}/>
                                 </Form.Group>
                                 <Form.Group as={Col} controlId="formTemple">
                                     <Form.Label>佛堂</Form.Label>
-                                    <Form.Control name="getTaoPlace" type="text" placeholder="請輸入求道佛堂"
+                                    <Form.Control name="getTaoPlace" type="text" placeholder="請輸入求道佛堂" value={this.state.getTaoPlace}
                                                   onChange={this.handleChange}/>
                                 </Form.Group>
                                 <Form.Group as={Col} controlId="formDanation">
                                     <Form.Label>求道功德費</Form.Label>
-                                    <Form.Control name="donation" type="number" placeholder="請輸入求道功德費"
+                                    <Form.Control name="donation" type="number" placeholder="請輸入求道功德費" value={this.state.donation}
                                                   onChange={this.handleChange}/>
                                 </Form.Group>
                             </Form.Row>
                             <Form.Row>
                                 <Form.Group as={Col} controlId="formYinShiName">
                                     <Form.Label>引師</Form.Label>
-                                    <Form.Control name="yinShi" type="text" placeholder="引師姓名"
+                                    <Form.Control name="yinShi" type="text" placeholder="引師姓名" value={this.state.yinShi}
                                                   onChange={this.handleChange}/>
                                 </Form.Group>
                                 <Form.Group as={Col} controlId="formBaoShiName">
                                     <Form.Label>保師</Form.Label>
-                                    <Form.Control name="baoShi" type="text" placeholder="保師姓名"
+                                    <Form.Control name="baoShi" type="text" placeholder="保師姓名" value={this.state.baoShi}
                                                   onChange={this.handleChange}/>
                                 </Form.Group>
                                 <Form.Group as={Col} controlId="formDianChuanShiName">
                                     <Form.Label>點傳師</Form.Label>
-                                    <Form.Control name="dianChuanShi" type="text" placeholder="點傳師姓名"
+                                    <Form.Control name="dianChuanShi" type="text" placeholder="點傳師姓名" value={this.state.dianChuanShi}
                                                   onChange={this.handleChange}/>
                                 </Form.Group>
                             </Form.Row>
 
                             <Form.Group controlId="formGridAddress1">
                                 <Form.Label>街名/道路</Form.Label>
-                                <Form.Control name="streetAddress" placeholder="1234 Main St"
+                                <Form.Control name="streetAddress" placeholder="1234 Main St" value={this.state.streetAddress}
                                               onChange={this.handleChange}/>
                             </Form.Group>
 
                             <Form.Group controlId="formGridAddress2">
                                 <Form.Label>單元/樓號/室</Form.Label>
-                                <Form.Control name="unit" placeholder="Apartment, studio, or floor"
+                                <Form.Control name="unit" placeholder="Apartment, studio, or floor" value={this.state.unit}
                                               onChange={this.handleChange}/>
                             </Form.Group>
 
                             <Form.Row>
                                 <Form.Group as={Col} controlId="formGridCity">
                                     <Form.Label>城市</Form.Label>
-                                    <Form.Control name="cityAddress" placeholder="Toronto"
+                                    <Form.Control name="cityAddress" placeholder="Toronto" value={this.state.cityAddress}
                                                   onChange={this.handleChange}/>
                                 </Form.Group>
-
                                 <Form.Group as={Col} controlId="formGridState">
                                     <Form.Label>省份</Form.Label>
-                                    <Form.Control name="province" as="select">
+                                    <Form.Control name="province" as="select" onChange={this.handleChange}>
                                         <option value="NL">NL</option>
                                         <option value="PE">PE</option>
                                         <option value="NS">NS</option>
@@ -202,7 +202,6 @@ export default class AddNewPerson extends React.Component {
                                         <option value="NU">NU</option>
                                     </Form.Control>
                                 </Form.Group>
-
                                 <Form.Group as={Col} controlId="formGridZip">
                                     <Form.Label>地區郵政</Form.Label>
                                     <Form.Control name="postalCode" placeholder="K2R 5B6" onChange={this.handleChange}/>
@@ -223,11 +222,12 @@ export default class AddNewPerson extends React.Component {
                               <span  style={{ fontWeight: "bold" ,color:'red'}}> **请输入所有资料** </span>
                             }
                             <div className="text-center">
+                                {this.state.dataPosted && <span style={{color:'green'}}>Data posted! 创好新人资料 ✓ </span>}
+                                <br/>
                                 <Button variant="primary" type="submit" onClick={this.handlerSubmit}>
                                     完成
                                 </Button>
                             </div>
-                            <button onClick={this.logout}> Logout</button>
                             <NavLink className="home-page-link" exact to={'home'}>
                                 <img className="image" src={home} alt="home" />
                                 Back to home page

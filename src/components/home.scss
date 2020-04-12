@@ -47,6 +47,20 @@
   }
 }
 
+.TrinityItem__ChineseTitle {
+  font-size: 1.75em;
+  padding-top: 8px;
+  margin-top: auto;
+  margin-bottom: auto;
+  text-align: center;
+  text-transform: uppercase;
+  color: #fff;
+
+  @media(min-width: 576px) {
+    width: 100%; /* IE fix */
+  }
+}
+
 .TrinityItem__Img {
   width: 40%;
   height: 100%;

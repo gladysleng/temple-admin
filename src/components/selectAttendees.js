@@ -4,13 +4,17 @@ import React from 'react';
 import fire from "../fire";
 import plus from "../image/plus.svg";
 import minus from "../image/minus.svg";
+import home from "../image/home.svg";
+import {NavLink} from "react-router-dom";
+import Button from "react-bootstrap/Button";
 
 class InteractiveTable extends React.Component {
-  constructor(props){
+  constructor(props) {
     super(props);
     this.state = {selected: null};
   }
-  render(){
+
+  render() {
     const {
       rows,
       row_handler,
@@ -18,66 +22,74 @@ class InteractiveTable extends React.Component {
       include_row_ctr,
       gender,
     } = this.props;
-    
-    const filtered_rows = gender ? _.pickBy(rows, (row) => row.gender===gender) : rows;
+
+    const filtered_rows = gender ? _.pickBy(rows, (row) => row.gender === gender) : rows;
+    let genderMap = {
+      乾: 'Male',
+      坤: 'Female',
+    }
     return <div id={`${gender}_div`}>
-      { gender && <span> {`List of ${gender} attendees ONLY`} </span> }
+      {gender && <span style={{fontWeight: "bold"}}> {`${genderMap[gender]} ${gender}道班员`} </span>}
       <table>
-      <thead>
-        <tr>
+        <thead>
+        <tr style={{backgroundColor: '#597293', color: '#EDF2F4'}}>
           {include_row_ctr && <td></td>}
           <td style={{fontWeight: 700}}>
-            { gender ? `Name (${gender})` : `Name` }
+            {gender ? `Name 姓名(${gender})` : `Name 姓名`}
           </td>
-          { include_row_ctr && 
+          {include_row_ctr &&
           <td style={{fontWeight: 700}}>
-            Donation ($)
-          </td> }
+            Donation 了愿 ($)
+          </td>}
           <td></td>
         </tr>
-      </thead>
-      <tbody>
-        { _.map(filtered_rows, (row, id) => 
-        <tr
-          key={id} >
-          { include_row_ctr && <td> {_.findIndex(_.keys(filtered_rows), row_id => row_id===id)} </td> }
-          <td key={`name_${id}`}>
-            <div style={{display: "flex", justifyContent: "flex-end"}}>
-              <span style={{marginLeft: "auto"}}> {row.name} </span>
-            </div>
-          </td>
-          { !isPlus && 
-          <td key={`donation_${id}`}>
-            <input id={id} type={"text"}/>
-          </td> }
-          <td
-            title={isPlus ? "Click to add to attendees" : "Click to remove the attendee"}
-            onClick={() => row_handler({[id]: row})}
-            className={"table-hover"}
-            key={`delete_row_${id}`}
-          >
-            <img style={{width: 20, height: 20, marginLeft: "auto"}} alt={isPlus ? "plus" : "minus"} aria-hidden="true" src={isPlus ? plus : minus}/>
-          </td>
-        </tr>
+        </thead>
+        <tbody>
+        {_.map(filtered_rows, (row, id) =>
+          <tr
+            key={id}>
+            {include_row_ctr && <td> {_.findIndex(_.keys(filtered_rows), row_id => row_id === id)} </td>}
+            <td key={`name_${id}`}>
+              <div style={{display: "flex", justifyContent: "center"}}>
+                <span> {row.name} </span>
+              </div>
+            </td>
+            {!isPlus &&
+            <td key={`donation_${id}`}>
+              <input id={id} type={"text"}/>
+            </td>}
+            <td
+              title={isPlus ? "Click to add to attendees" : "Click to remove the attendee"}
+              onClick={() => row_handler({[id]: row})}
+              className={"table-hover"}
+              key={`delete_row_${id}`}
+            >
+              <img style={{width: 20, height: 20, marginLeft: "auto"}} alt={isPlus ? "plus" : "minus"}
+                   aria-hidden="true" src={isPlus ? plus : minus}/>
+            </td>
+          </tr>
         )}
-      </tbody>
-    </table>
+        </tbody>
+      </table>
     </div>;
   }
 }
 
 export default class SelectAttendees extends React.Component {
-  constructor(props){
+  constructor(props) {
     super(props);
     this.state = {
       loading: false,
       query: "",
       event_name: "",
       selected_data: {},
+      dataPosted: false,
+      donationsNotEntered: false,
     };
   }
+
   componentDidMount() {
-    this.setState({ loading: true });
+    this.setState({loading: true});
     fire.database().ref('/Users/').once('value').then((snapshot) => {
       const data = _.chain(snapshot.val())
         .map((row, id) => ([
@@ -88,11 +100,11 @@ export default class SelectAttendees extends React.Component {
         ]))
         .fromPairs()
         .value();
-      this.setState({ loading: false, data: data });
+      this.setState({loading: false, data: data});
     });
   }
 
-  render(){
+  render() {
     const {
       query,
       loading,
@@ -109,59 +121,74 @@ export default class SelectAttendees extends React.Component {
       .value();
 
     return <div style={{margin: 10}}>
-        <h1 className="header"> Add attendees </h1>
+      <h1 className="header"> Add Attendees To The Events <br/> 添加班员</h1>
+      <div style={{display: "flex", justifyContent: "space-evenly", paddingBottom: '30px'}}>
         <div style={{display: "flex", flexDirection: "column"}}>
-          <label style={{ fontWeight: "bold" ,paddingTop:'30px'}}> Event Name : </label>
+          <label style={{fontWeight: "bold", paddingTop: '20px'}}> Event Name 活动名字 : </label>
           <input
-                className="input-box"
-                type="text"
-                placeholder="Name of the event for the attendees"
-                onChange={ (evt) => this.setState({ event_name: evt.target.value }) }
-              />
-          <label style={{ fontWeight: "bold" ,paddingTop:'30px'}}> Search by Name : </label>
-              <input
-                className="input-box"
-                type="text"
-                placeholder="Search by Name"
-                onChange={ (evt) => this.setState({ query: evt.target.value }) }
-              />
+            className="input-box-attendees"
+            type="text"
+            placeholder="请输入活动的名字"
+            onChange={(evt) => this.setState({event_name: evt.target.value})}
+          />
+
         </div>
+      </div>
       <div style={{display: "flex", flexDirection: "row", justifyContent: "space-evenly"}}>
-      { !loading && <InteractiveTable
-          isPlus={true}
-          row_handler={ row => this.setState({
-            selected_data: _.assignIn(selected_data, row)
-          }) }
-          rows={filtered_data}
-        /> }
-      { !loading && <InteractiveTable
+        <div>
+          <label style={{fontWeight: "bold"}}> Search Name 搜索班员: </label>
+          <br/>
+          <input
+            className="input-box-attendees"
+            type="text"
+            placeholder="请输入班员的姓名"
+            onChange={(evt) => this.setState({query: evt.target.value})}
+          />
+          {!loading && <InteractiveTable
+            isPlus={true}
+            row_handler={row => this.setState({
+              selected_data: _.assignIn(selected_data, row)
+            })}
+            rows={filtered_data}
+          />}
+        </div>
+
+        {!loading && <InteractiveTable
           include_row_ctr={!_.isEmpty(selected_data)}
           gender={"乾"}
-          row_handler={ row => this.setState({
+          row_handler={row => this.setState({
             selected_data: _.omit(selected_data, _.keys(row))
-          }) }
+          })}
           rows={selected_data}
-        /> }
-      { !loading && <InteractiveTable
+        />}
+        {!loading && <InteractiveTable
           include_row_ctr={!_.isEmpty(selected_data)}
-          row_handler={ row => this.setState({
+          row_handler={row => this.setState({
             selected_data: _.omit(selected_data, _.keys(row))
-          }) }
+          })}
           rows={selected_data}
           gender={"坤"}
-        /> }
+        />}
       </div>
-      <div>
-        <button onClick={() => {
+      <div style={{textAlign: 'center', paddingTop: '30px'}}>
+        {this.state.dataPosted
+        && !this.state.donationsNotEntered
+        && <span style={{color: 'green', paddingBottom: '10px'}}> Event Created! 创好文件 ✓ </span>}
+        {this.state.donationsNotEntered
+        && !this.state.dataPosted
+        && <span style={{fontWeight: "bold", color: 'red', marginBottom: '20px'}}>
+          ** Please enter donations column 请输入了班员愿资料 ** </span>}
+        <br/><br/>
+        <Button variant="primary" type="submit" onClick={() => {
           var success = true;
-          if(event_name.length===0) {
+          if (event_name.length === 0) {
             success = false;
           }
           var 乾_data = _.chain(selected_data)
-            .pickBy(row => row.gender==="乾")
+            .pickBy(row => row.gender === "乾")
             .value();
           _.forEach(document.getElementById("乾_div").getElementsByTagName("INPUT"), input => {
-            if(input.value.length===0 || isNaN(input.value)) {
+            if (input.value.length === 0 || isNaN(input.value)) {
               success = false;
             }
             乾_data[input.id] = {
@@ -170,10 +197,10 @@ export default class SelectAttendees extends React.Component {
             };
           });
           var 坤_data = _.chain(selected_data)
-            .pickBy(row => row.gender==="坤")
+            .pickBy(row => row.gender === "坤")
             .value();
           _.forEach(document.getElementById("坤_div").getElementsByTagName("INPUT"), input => {
-            if(input.value.length===0 || isNaN(input.value)) {
+            if (input.value.length === 0 || isNaN(input.value)) {
               success = false;
             }
             坤_data[input.id] = {
@@ -181,22 +208,30 @@ export default class SelectAttendees extends React.Component {
               donation: _.toNumber(input.value),
             };
           });
-          if(!success) {
-            alert("You need an event name and valid input for all donations");
+          if (!success) {
+            this.setState({
+              dataPosted: false,
+              donationsNotEntered: true,
+            });
             return;
           }
           let mf = fire.database().ref('Events');
           mf.push({
-              event_name: event_name,
-              attendees: {
-                乾: 乾_data,
-                坤: 坤_data
-              }
+            event_name: event_name,
+            attendees: {
+              乾: 乾_data,
+              坤: 坤_data
+            }
           });
+          this.setState({dataPosted: true, donationsNotEntered: false});
         }}>
-          SUBMIT
-        </button>
+          SUBMIT 完成
+        </Button>
       </div>
+      <NavLink className="home-page-link" exact to={'home'}>
+        <img className="image" src={home} alt="home"/>
+        Back to home page
+      </NavLink>
     </div>;
   }
 }
