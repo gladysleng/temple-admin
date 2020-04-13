@@ -1,8 +1,19 @@
 html, body, #root {
-    margin: 0;
+    //margin: 0;
     font-family: '0arameregular';
     height: 100%;
     width: 100%;
+}
+.site-wide-header {
+    width: 100%;
+    //height: 60px;
+    display: flex;
+    //text-align: center;
+    //justify-content: center;
+    align-items: center;
+    background-color:  darken( #748CAB, 20% );
+    color: #fff;
+    border-bottom: 10px solid #da3a38;
 }
 
 .mobile-scale {

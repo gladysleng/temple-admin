@@ -11,8 +11,10 @@ import ViewAllEvents from './viewAllEvents';
 import {ViewEvent} from './viewEvent';
 import {
   Switch,
-  Route
+  Route,
+  Link,
 } from "react-router-dom";
+import templeLogo from '../image/temple-logo.png';
 
 export default class Application extends React.Component {
 
@@ -41,6 +43,14 @@ export default class Application extends React.Component {
     render() {
         return (
           <div className="Temple-admin">
+              <div className="site-wide-header">
+                  <Link
+                    style={{color: "white", fontSize: 25, fontWeight: 900, marginLeft: 20}}
+                    exact to={"/home"}>
+                        <img style={{width: 45, height: 45, margin: "5px 5px 5px 0px"}} src={templeLogo} />
+                        <span style={{marginTop: 5, verticalAlign: "middle"}}> Temple Admin. System </span>
+                    </Link>
+              </div>
             <Switch>
               <Route exact path="/" component={Login} />
               <Route exact path="/home" component={Home} />

@@ -61,11 +61,13 @@ class ReactViewEvent extends React.Component {
       fire.database().ref('/Users/').once('value').then((usrs_snapshot) => {
         const user_data = usrs_snapshot.val();
         const target_evt = evt_snapshot.val()[event_id];
-
+        console.log(user_data);
         const evt_data = _.chain(target_evt.attendees)
-          .map((row, gender) => [gender, 
+          .map((row, gender) => {
+            return [gender, 
               _.map(row,
-              (user, id) => ({
+              (user, id) => {
+                return user_data[id] && ({
                 name: user_data[id].name,
                 donation: user_data[id].donation,
                 getTaoAge: user_data[id].getTaoAge,
@@ -74,8 +76,8 @@ class ReactViewEvent extends React.Component {
                 address: user_data[id].unit ?
                   `${user_data[id].streetAddress} ${user_data[id].unit}, ${user_data[id].cityAddress}, ${user_data[id].province} ${user_data[id].postalCode}` :
                   `${user_data[id].streetAddress}, ${user_data[id].cityAddress}, ${user_data[id].province} ${user_data[id].postalCode}`,
-                })
-              )])
+                });}
+              )];})
           .fromPairs()
           .value();
       evt_data.event_name = target_evt.event_name;

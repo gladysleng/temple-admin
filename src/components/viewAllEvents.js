@@ -26,7 +26,7 @@ export default class ViewAllEvents extends React.Component {
       <div style={{margin: 20, display: "flex", flexDirection: "column", justifyContent: "center"}}>
         <h1 style={{margin: 10}} className="header"> Print attendees </h1>
         <span style={{margin: "auto", fontWeight: 700}}> Click on an event to print event attendees </span>
-        <table style={{marginLeft: "auto", marginRight: "auto", marginTop: "40px"}}>
+        <table style={{marginLeft: "auto", marginRight: "auto", marginTop: "40px", width: "50%"}}>
         <tbody>
           <tr>
             {_.map(["Event name"], (header) => 

@@ -2,7 +2,7 @@ import React from 'react';
 import './addNewPerson.scss';
 import Button from 'react-bootstrap/Button';
 import Form from 'react-bootstrap/Form';
-import Col from 'react-bootstrap/Col'
+import Col from 'react-bootstrap/Col';
 import fire from "../fire";
 import home from "../image/home.svg";
 import {NavLink} from "react-router-dom";
@@ -32,7 +32,7 @@ export default class AddNewPerson extends React.Component {
             dianChuanShi: '',
             donation: '',
             dataPosted:false,
-        }
+        };
     }
 
     componentDidMount() {
@@ -53,11 +53,11 @@ export default class AddNewPerson extends React.Component {
         const dataIsEmpty = (this.state.name === '' || this.state.getTaoAge === '' || this.state.getTaoPlace === '' || this.state.yinShi === '' ||
         this.state.baoShi === '' || this.state.streetAddress === '' || this.state.unit === '' || this.state.cityAddress === '' ||
         this.state.postalCode === '' || this.state.dianChuanShi === '' || this.state.donation === ''
-        )
+        );
         if(dataIsEmpty){
-            this.setState({dataIsEmpty: dataIsEmpty})
+            this.setState({dataIsEmpty: dataIsEmpty});
         } else{
-            console.log("Submit")
+            console.log("Submit");
             let mf = fire.database().ref('Users');
             let messageRef = mf.push({
                 name: this.state.name,
@@ -97,7 +97,7 @@ export default class AddNewPerson extends React.Component {
                 dianChuanShi: '',
                 donation: '',
                 emptyData: true,
-            })
+            });
         }
     }
 
@@ -109,8 +109,9 @@ export default class AddNewPerson extends React.Component {
     render() {
         return (
             <div className="container-fluid h-100 bg-light text-dark">
-                <div className="row justify-content-center align-items-center">
-                    <h1 className="header">登記新求道人 <br/> Register New Participant</h1>
+                <div className="d-flex flex-column align-items-center" style={{paddingTop: 20}}>
+                <h1 style={{textAlign: "center", fontWeight: 900}}> 登記新求道人 </h1>
+                <h1 style={{textAlign: "center", fontWeight: 900}}> Register New Participant </h1>
                 </div>
                 <hr/>
                 <div className="d-flex justify-content-center align-items-center container ">
@@ -207,7 +208,6 @@ export default class AddNewPerson extends React.Component {
                                     <Form.Control name="postalCode" placeholder="K2R 5B6" onChange={this.handleChange}/>
                                 </Form.Group>
                             </Form.Row>
-
                             <Form.Group id="formGridCheckbox">
                                 <Form.Check type="checkbox" label="有參與過三天法會"
                                             onChange={this.handleAttendThreeDaysFaHui}/>
@@ -228,10 +228,6 @@ export default class AddNewPerson extends React.Component {
                                     完成
                                 </Button>
                             </div>
-                            <NavLink className="home-page-link" exact to={'home'}>
-                                <img className="image" src={home} alt="home" />
-                                Back to home page
-                            </NavLink>
                         </Form>
                     </div>
                 </div>

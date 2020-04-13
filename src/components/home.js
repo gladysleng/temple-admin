@@ -38,7 +38,6 @@ export default class Home extends React.Component {
 
     return (
       <div>
-        <h1 className="header"> Home Page 主頁 </h1>
         <div style={{display: "inline-block"}}>
           <div class="row">
             <div class="column">

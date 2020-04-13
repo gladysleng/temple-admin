@@ -3,7 +3,6 @@ import React from 'react';
 import fire from "../fire";
 import _ from 'lodash';
 import {NavLink} from 'react-router-dom';
-import home from '../image/home.svg';
 
 export default class PeopleTable extends React.Component {
   constructor(props) {
@@ -59,7 +58,7 @@ export default class PeopleTable extends React.Component {
 
     return !loading &&
       <div className="people-table-container">
-        <h1 className="header"> 道親資料 </h1>
+        <h1 style={{textAlign: "center", fontWeight: 900}}> 道親資料 </h1>
         <div>
           <label style={{fontWeight: "bold", paddingTop: '30px'}}> Search 搜索: </label>
           <input
@@ -68,10 +67,6 @@ export default class PeopleTable extends React.Component {
             placeholder="Name 请输入姓名"
             onChange={(evt) => this.setState({query: evt.target.value})}
           />
-          <NavLink className="home-page-link" exact to={'home'}>
-            <img className="image" src={home} alt="home"/>
-            Back to home page
-          </NavLink>
         </div>
         <table>
           <tbody>
@@ -89,7 +84,7 @@ export default class PeopleTable extends React.Component {
                     {
                       key === "name" ? <NavLink exact to={{pathname: `/profile/${id}`}}> {field} </NavLink> : _.toString(field)
                     }
-                  </td>
+                  </td>;
                 }
               )}
             </tr>

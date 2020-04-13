@@ -13,7 +13,7 @@ export default class Login extends React.Component {
             email: '',
             password: '',
             errorMessage:''
-        }
+        };
     }
 
     login(e) {
@@ -44,7 +44,7 @@ export default class Login extends React.Component {
     render() {
         return (
             <div class="container-fluid h-100 bg-light text-dark">
-                    <h1 className="header">登入帳戶</h1>
+                <h1 style={{textAlign: "center", fontWeight: 900, marginTop: 50}}> 登入帳戶 </h1>
                 <div className="d-flex justify-content-center align-items-center container ">
                     <div className="col-md-8">
                         <form>
