@@ -1,5 +1,6 @@
 import React from 'react';
 import fire from "../fire";
+import _ from 'lodash';
 import './profile.scss';
 import {NavLink} from "react-router-dom";
 
@@ -8,26 +9,33 @@ export default class Profile extends React.Component {
     super(props);
     this.state = {
       data: {},
-      loading:false,
-      event:{},
+      loading: false,
     };
   }
 
   componentDidMount() {
-    const id = this.props.match.params.id;
-    fire.database().ref(`/Users/${id}`).once('value').then((snapshot) => {
-      this.setState({ data: snapshot.val()});
+    const user_id = this.props.match.params.id;
+    fire.database().ref(`/Users/${user_id}`).once('value').then((user_snapshot) => {
+      fire.database().ref(`/Events/`).once('value').then((events_snapshot) => {
+        const user_data = user_snapshot.val();
+        this.setState({
+          data: user_data,
+          list_of_events: _.pickBy( events_snapshot.val(),
+            event => !_.isUndefined(event.attendees[user_data.gender][user_id]) ),
+        });
+      });
     });
   }
   
   render() {
-    const { data } = this.state;
+    const { data, list_of_events } = this.state;
+    console.log(list_of_events);
     return (
       <div className="column-container">
-        <span className="header"> 個人資料 </span>
-        <NavLink style={{marginLeft: 30}} exact to={'/people-table'}>
-          Back to user search
+        <NavLink style={{marginLeft: 30, marginTop: 30}} exact to={'/people-table'}>
+          ← Back to user search
         </NavLink>
+        <span className="header"> 個人資料 </span>
         <div className="row-container">
           <span className="left"> 名字: </span>
           <span className="right"> {data.name} </span>
@@ -69,6 +77,14 @@ export default class Profile extends React.Component {
         <div className="row-container">
           <span className="left"> 了愿: </span>
           <span className="right"> {data.donation} </span>
+        </div>
+        <div className="row-container">
+          <span className="left"> List of events: </span>
+          <span className="right">
+            <ul>
+              { _.map(list_of_events, event => <li> {event.event_name} </li>) }
+            </ul>
+          </span>
         </div>
       </div>
     );

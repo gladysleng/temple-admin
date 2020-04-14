@@ -19,6 +19,7 @@
   @media (min-width: 1255px){
     flex: 0 0 48%;
   }
+  font-weight: 900;
   margin: 0 0 20px 20px;
   text-align: end;
   font-weight: bold;
@@ -31,6 +32,10 @@
 .header {
   font-size: x-large;
   font-weight: bold;
-  margin: 30px 30px;
+  margin-bottom: 30px;
   text-align: center;
+}
+ul {
+  margin: 0;
+  padding-inline-start: 10px;
 }

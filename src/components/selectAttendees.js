@@ -11,7 +11,13 @@ import Button from "react-bootstrap/Button";
 class InteractiveTable extends React.Component {
   constructor(props) {
     super(props);
-    this.state = {selected: null};
+    this.state = {
+      selected: null,
+      added_list: {
+        乾: {},
+        坤: {}
+      },
+    };
   }
 
   render() {
@@ -27,7 +33,7 @@ class InteractiveTable extends React.Component {
     let genderMap = {
       乾: 'Male',
       坤: 'Female',
-    }
+    };
     return <div id={`${gender}_div`}>
       {gender && <span style={{fontWeight: "bold"}}> {`${genderMap[gender]} ${gender}道班员`} </span>}
       <table>
@@ -48,7 +54,7 @@ class InteractiveTable extends React.Component {
         {_.map(filtered_rows, (row, id) =>
           <tr
             key={id}>
-            {include_row_ctr && <td> {_.findIndex(_.keys(filtered_rows), row_id => row_id === id)} </td>}
+            {include_row_ctr && <td> {_.findIndex(_.keys(filtered_rows), row_id => row_id === id) + 1} </td>}
             <td key={`name_${id}`}>
               <div style={{display: "flex", justifyContent: "center"}}>
                 <span> {row.name} </span>
@@ -60,7 +66,19 @@ class InteractiveTable extends React.Component {
             </td>}
             <td
               title={isPlus ? "Click to add to attendees" : "Click to remove the attendee"}
-              onClick={() => row_handler({[id]: row})}
+              onClick={() => {
+                const new_list = _.clone(this.state.added_list);
+                new_list[row.gender][id] = row;
+                this.setState({added_list: new_list});
+                return row_handler({
+                  user: {
+                    [id]: {
+                    ...row,
+                    order_num: _.keys(this.state.added_list[row.gender]).length
+                  }
+                },
+                });
+            }}
               className={"table-hover"}
               key={`delete_row_${id}`}
             >
@@ -146,9 +164,11 @@ export default class SelectAttendees extends React.Component {
           />
           {!loading && <InteractiveTable
             isPlus={true}
-            row_handler={row => this.setState({
-              selected_data: _.assignIn(selected_data, row)
-            })}
+            row_handler={row => {
+              this.setState({
+                selected_data: _.assignIn(selected_data, row.user)
+              });
+            }}
             rows={filtered_data}
           />}
         </div>
@@ -216,6 +236,7 @@ export default class SelectAttendees extends React.Component {
             return;
           }
           let mf = fire.database().ref('Events');
+          console.log(乾_data);
           mf.push({
             event_name: event_name,
             attendees: {
