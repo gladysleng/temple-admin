@@ -55,7 +55,7 @@ export default class AddNewPerson extends React.Component {
         this.state.postalCode === '' || this.state.dianChuanShi === '' || this.state.donation === ''
         );
         if(dataIsEmpty){
-            this.setState({dataIsEmpty: dataIsEmpty});
+            this.setState({dataIsEmpty: dataIsEmpty, dataPosted: false});
         } else{
             console.log("Submit");
             let mf = fire.database().ref('Users');
@@ -77,7 +77,7 @@ export default class AddNewPerson extends React.Component {
                 donation: this.state.donation,
             });
             if(messageRef != null){
-                this.setState({dataPosted:true});
+                this.setState({dataPosted:true, dataIsEmpty: dataIsEmpty});
             }
             console.log("posted:" + messageRef);
             this.setState({
@@ -96,7 +96,6 @@ export default class AddNewPerson extends React.Component {
                 threeDaysFaHuiDate: '',
                 dianChuanShi: '',
                 donation: '',
-                emptyData: true,
             });
         }
     }
@@ -208,7 +207,7 @@ export default class AddNewPerson extends React.Component {
                                 </Form.Group>
                             </Form.Row>
                             <Form.Group id="formGridCheckbox">
-                                <Form.Check type="checkbox" label="有參與過三天法會"
+                                <Form.Check type="checkbox" label="有參與過三天法會" checked={this.state.attendedThreeDaysFaHui}
                                             onChange={this.handleAttendThreeDaysFaHui}/>
                             </Form.Group>
                             {this.state.attendedThreeDaysFaHui &&
@@ -217,11 +216,11 @@ export default class AddNewPerson extends React.Component {
                                               onChange={this.handleChange}/>
                             </Form.Group>
                             }
-                            { this.state.dataIsEmpty &&
+                            { this.state.dataIsEmpty && !this.state.dataPosted &&
                               <span  style={{ fontWeight: "bold" ,color:'red'}}> **请输入所有资料** </span>
                             }
                             <div className="text-center">
-                                {this.state.dataPosted && <span style={{color:'green'}}>Data posted! 创好新人资料 ✓ </span>}
+                                {this.state.dataPosted && !this.state.dataIsEmpty && <span style={{color:'green'}}>Data posted! 创好新人资料 ✓ </span>}
                                 <br/>
                                 <Button variant="primary" type="submit" onClick={this.handlerSubmit}>
                                     完成
