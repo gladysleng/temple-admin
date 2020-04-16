@@ -110,8 +110,7 @@ export default class AddNewPerson extends React.Component {
         return (
             <div className="container-fluid h-100 bg-light text-dark">
                 <div className="d-flex flex-column align-items-center" style={{paddingTop: 20}}>
-                <h1 style={{textAlign: "center", fontWeight: 900}}> 登記新求道人 </h1>
-                <h1 style={{textAlign: "center", fontWeight: 900}}> Register New Participant </h1>
+                <h1 style={{textAlign: "center", fontSize:30}}> 登記新求道人 <br/>Register New Participant</h1>
                 </div>
                 <hr/>
                 <div className="d-flex justify-content-center align-items-center container ">

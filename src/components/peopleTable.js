@@ -58,13 +58,13 @@ export default class PeopleTable extends React.Component {
 
     return !loading &&
       <div className="people-table-container">
-        <h1 style={{textAlign: "center", fontWeight: 900}}> 道親資料 </h1>
+        <h1 style={{textAlign: "center", fontSize: 30}}> 道親資料<br/>Volunteers' Information</h1>
         <div>
-          <label style={{fontWeight: "bold", paddingTop: '30px'}}> Search 搜索: </label>
+          <label style={{fontWeight: "bold", paddingTop: '30px',fontSize:20}}> 搜索 Search : </label>
           <input
             className="input-box"
             type="text"
-            placeholder="Name 请输入姓名"
+            placeholder="请输入姓名"
             onChange={(evt) => this.setState({query: evt.target.value})}
           />
         </div>

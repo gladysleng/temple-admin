@@ -24,12 +24,11 @@ export default class ViewAllEvents extends React.Component {
     const { loading, data } = this.state;
     return !loading &&
       <div style={{margin: 20, display: "flex", flexDirection: "column", justifyContent: "center"}}>
-        <h1 style={{margin: 10}} className="header"> Print attendees </h1>
-        <span style={{margin: "auto", fontWeight: 700}}> Click on an event to print event attendees </span>
+        <h1 style={{margin: 10,fontSize:30,textAlign:'center'}}> 佛堂活动资料 <br/>View Event </h1>
         <table style={{marginLeft: "auto", marginRight: "auto", marginTop: "40px", width: "50%"}}>
         <tbody>
           <tr>
-            {_.map(["Event name"], (header) => 
+            {_.map(["活动名字"], (header) =>
               <td className="tbl-header" key={header}>
                 {header}
               </td>

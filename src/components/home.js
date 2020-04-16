@@ -24,11 +24,11 @@ export default class Home extends React.Component {
   render() {
     const TrinityItem = ({img_url, title,chinese_title, href}) => (
       <a href={href} className="TrinityItem">
-        <div className="TrinityItem__Title">
-          {title}
-        </div>
         <div className="TrinityItem__ChineseTitle">
           {chinese_title}
+        </div>
+        <div className="TrinityItem__Title">
+          {title}
         </div>
         <div className="TrinityItem__Img">
           <img aria-hidden="true" src={img_url}/>

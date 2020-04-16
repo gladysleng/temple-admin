@@ -4,6 +4,7 @@ import ReactToPrint from 'react-to-print';
 import { useParams } from 'react-router-dom';
 import fire from "../fire";
 import _ from 'lodash';
+import Button from 'react-bootstrap/Button';
 
 export function ViewEvent() {
   const { event_id } = useParams();
@@ -18,12 +19,13 @@ class TableToPrint extends React.Component {
       headers,
     } = this.props;
 
-    return <div style={{margin: 10}}>
-      <span dangerouslySetInnerHTML={{
-            __html: `Showing <b>${selected_gender}</b> attendees for <b>${data.event_name}</b>`
+    return <div style={{margin: 20,textAlign:'center'}}>
+
+      <span style={{ fontWeight:'Bold',fontSize:20}} dangerouslySetInnerHTML={{
+            __html: `<b>${data.event_name}</b>`
           }} />
       <table style={{width: "100%"}}>
-        <thead>
+        <thead style={{fontWeight:'bold'}}>
           <tr>
             {_.map(headers, header => (
               <td> {header} </td>
@@ -88,8 +90,8 @@ class ReactViewEvent extends React.Component {
   render() {
     const { loading, data, selected_gender } = this.state;
     return <div style={{display: "flex", flexDirection: "column", justifyContent: "center"}}>
-      <h1 style={{margin: 10}} className="header"> Print attendees </h1>
-      <div style={{display: "flex", flexDirection: "row", textAlign:"center", justifyContent: "center"}}>
+      <h1 style={{margin: 10,fontSize:30,textAlign:'center'}}>  班员资料 <br/> Attendees' Information </h1>
+      <div style={{display: "flex", flexDirection: "row", textAlign:"center", justifyContent: "center",marginTop:30}}>
         <span style={{fontWeight: 700, paddingRight: 10, lineHeight: 2.3}}> 坤 </span>
         <label class="switch">
           <input type="checkbox" onClick={(e) => this.setState({selected_gender: e.target.checked ? "乾" : "坤"})}/>
@@ -97,18 +99,18 @@ class ReactViewEvent extends React.Component {
         </label>
         <span style={{fontWeight: 700, paddingLeft: 10, lineHeight: 2.3}}> 乾 </span>
       </div>
-        <ReactToPrint
-          trigger={() => <button style={{margin: "auto"}} className="col-md-3">Print the table below!</button>}
-          content={() => this.componentRef}
-        />
       {!loading &&
       <TableToPrint
         ref={el => (this.componentRef = el)}
-        headers={["", "Name", "Donation", "TaoAge", "TaoPlace", "Yinshi", "Location"]}
+        headers={["编号", `姓名(${selected_gender})` , "了愿", "求道年龄", "佛堂", "引师", "地址"]}
         data={data}
         selected_gender={selected_gender}
       />
       }
+      <ReactToPrint
+        trigger={() => <Button style={{margin: "auto"}} className="col-md-3">Print table 打印表格 </Button>}
+        content={() => this.componentRef}
+      />
     </div>;
   }
 }

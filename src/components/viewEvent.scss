@@ -10,6 +10,14 @@ html, body {
 tr {
   background-color: white;
 }
+
+tr:nth-child(even) {
+  background-color: white;
+  text-align: center;
+  max-width:100%;
+  white-space:nowrap;
+}
+
 .switch {
   position: relative;
   display: inline-block;

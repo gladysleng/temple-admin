@@ -31,11 +31,11 @@ class InteractiveTable extends React.Component {
 
     const filtered_rows = gender ? _.pickBy(rows, (row) => row.gender === gender) : rows;
     let genderMap = {
-      乾: 'Male',
-      坤: 'Female',
+      乾: 'Male Attendees',
+      坤: 'Female Attendees',
     };
     return <div id={`${gender}_div`}>
-      {gender && <span style={{fontWeight: "bold"}}> {`${genderMap[gender]} ${gender}道班员`} </span>}
+      {gender && <span style={{fontWeight: "bold"}}> {`${gender}道班员 ${genderMap[gender]} `} </span>}
       <table>
         <thead>
         <tr style={{backgroundColor: '#597293', color: '#EDF2F4'}}>
@@ -139,10 +139,10 @@ export default class SelectAttendees extends React.Component {
       .value();
 
     return <div style={{margin: 10}}>
-      <h1 className="header"> Add Attendees To The Events <br/> 添加班员</h1>
+      <h1 style={{fontSize:30,textAlign:'center'}}> 添加班员 <br/> Add Attendees To The Events </h1>
       <div style={{display: "flex", justifyContent: "space-evenly", paddingBottom: '30px'}}>
         <div style={{display: "flex", flexDirection: "column"}}>
-          <label style={{fontWeight: "bold", paddingTop: '20px'}}> Event Name 活动名字 : </label>
+          <label style={{fontWeight: "bold", paddingTop: '20px'}}>  活动名字 Event Name : </label>
           <input
             className="input-box-attendees"
             type="text"
@@ -154,7 +154,7 @@ export default class SelectAttendees extends React.Component {
       </div>
       <div style={{display: "flex", flexDirection: "row", justifyContent: "space-evenly"}}>
         <div>
-          <label style={{fontWeight: "bold"}}> Search Name 搜索班员: </label>
+          <label style={{fontWeight: "bold"}}> 搜索班员 Search Name : </label>
           <br/>
           <input
             className="input-box-attendees"
@@ -197,7 +197,7 @@ export default class SelectAttendees extends React.Component {
         {this.state.donationsNotEntered
         && !this.state.dataPosted
         && <span style={{fontWeight: "bold", color: 'red', marginBottom: '20px'}}>
-          ** Please enter donations column 请输入了班员愿资料 ** </span>}
+          ** 请输入了班员愿资料  Please enter donations column** </span>}
         <br/><br/>
         <Button variant="primary" type="submit" onClick={() => {
           var success = true;
@@ -246,13 +246,9 @@ export default class SelectAttendees extends React.Component {
           });
           this.setState({dataPosted: true, donationsNotEntered: false});
         }}>
-          SUBMIT 完成
+           完成
         </Button>
       </div>
-      <NavLink className="home-page-link" exact to={'home'}>
-        <img className="image" src={home} alt="home"/>
-        Back to home page
-      </NavLink>
     </div>;
   }
 }
